@@ -1,0 +1,90 @@
+:root {
+    --sanctum-cream: #f5f0e6;
+    --sanctum-brown: #2d1e10;
+    --card-beige: #ece4d4;
+    --text-muted: #6b5e51;
+}
+
+body.sanctum-bg {
+    background-color: var(--sanctum-cream) !important;
+    color: var(--sanctum-brown);
+    font-family: sans-serif;
+}
+
+/* Typography */
+.serif-italic {
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    font-weight: 800;
+    line-height: 0.9;
+    color: var(--sanctum-brown);
+}
+
+.tracking-widest {
+    letter-spacing: 3px;
+    color: var(--text-muted);
+}
+
+/* Hero Image */
+.hero-image-container img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    background-color: #ddd; /* fallback if image fails */
+}
+
+/* Cards */
+.custom-card {
+    background-color: var(--card-beige) !important;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.bg-dark-custom {
+    background-color: var(--sanctum-brown) !important;
+    color: #e5dccb !important;
+}
+
+.card-label {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.stat-xl {
+    font-size: 5rem;
+    font-weight: 900;
+    font-family: 'Georgia', serif;
+    margin: 0;
+}
+
+.stat-lg {
+    font-size: 3rem;
+    font-weight: 900;
+    font-family: 'Georgia', serif;
+}
+
+.text-brown { color: #8b5e3c !important; }
+.text-success { color: #4a6741 !important; }
+
+/* Buttons */
+.btn-request {
+    background-color: var(--sanctum-brown) !important;
+    border: none;
+    border-radius: 0;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.nav-item-custom {
+    color: var(--text-muted) !important;
+}
+
+
+.custom-link{
+    color: #5b4636;
+    font-size: 0.95rem;
+    text-decoration: none;
+}
