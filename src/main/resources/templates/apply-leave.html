@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Apply for Leave - Leave Portal
+    </title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lato:wght@300;400;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        *, *::before, *::after {
+
+            box-sizing: border-box;
+
+            margin: 0;
+
+            padding: 0;
+        }
+
+        :root {
+
+            --bg: #f0ebe3;
+
+            --surface: #ffffff;
+
+            --text-dark: #1a1208;
+
+            --text-mid: #3d2e10;
+
+            --text-muted: #7a6a52;
+
+            --accent: #b87333;
+
+            --accent-hover: #9a5e22;
+
+            --border: #ddd5c8;
+
+            --input-bg: #ffffff;
+
+            --shadow: 0 4px 32px rgba(60, 40, 10, 0.10);
+        }
+
+        body {
+
+            font-family: 'Lato', sans-serif;
+
+            background-color: var(--bg);
+
+            color: var(--text-dark);
+
+            min-height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+        nav {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 56px;
+
+            height: 68px;
+
+            background-color: var(--bg);
+
+            border-bottom: 1px solid var(--border);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+        }
+
+        .nav-logo {
+
+            font-family: 'Playfair Display', serif;
+
+            font-weight: 700;
+
+            font-size: 1.35rem;
+
+            color: var(--text-dark);
+
+            text-decoration: none;
+        }
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 36px;
+
+            list-style: none;
+        }
+
+        .nav-links a {
+
+            text-decoration: none;
+
+            font-size: 0.92rem;
+
+            color: var(--text-muted);
+
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+
+            color: var(--text-dark);
+        }
+
+        .nav-links a.active {
+
+            color: var(--text-dark);
+
+            font-weight: 700;
+
+            position: relative;
+        }
+
+        .nav-links a.active::after {
+
+            content: '';
+
+            position: absolute;
+
+            bottom: -4px;
+
+            left: 0;
+
+            right: 0;
+
+            height: 2px;
+
+            background-color: var(--accent);
+        }
+
+        .user-menu {
+
+            position: relative;
+        }
+
+        .avatar-btn {
+
+            width: 42px;
+
+            height: 42px;
+
+            border-radius: 50%;
+
+            background-color: var(--text-dark);
+
+            color: white;
+
+            border: none;
+
+            cursor: pointer;
+
+            font-size: 0.85rem;
+
+            font-weight: 700;
+        }
+
+        .dropdown {
+
+            display: none;
+
+            position: absolute;
+
+            top: calc(100% + 12px);
+
+            right: 0;
+
+            background: white;
+
+            border-radius: 14px;
+
+            box-shadow: 0 8px 32px rgba(30, 18, 4, 0.14);
+
+            min-width: 210px;
+
+            overflow: hidden;
+
+            z-index: 200;
+        }
+
+        .dropdown.open {
+
+            display: block;
+        }
+
+        .dropdown-header {
+
+            padding: 18px 20px 14px;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dropdown-header .d-name {
+
+            font-weight: 700;
+
+            font-size: 0.97rem;
+        }
+
+        .dropdown-header .d-role {
+
+            font-size: 0.82rem;
+
+            color: var(--text-muted);
+        }
+
+        .dropdown-item {
+
+            display: block;
+
+            width: 100%;
+
+            padding: 13px 20px;
+
+            text-decoration: none;
+
+            color: var(--text-dark);
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dropdown-item.logout {
+
+            color: #c0392b;
+        }
+
+        main {
+
+            flex: 1;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 60px 24px;
+
+            gap: 72px;
+        }
+
+        .left-panel {
+
+            flex: 0 0 380px;
+
+            max-width: 380px;
+        }
+
+        .left-panel .eyebrow {
+
+            font-size: 0.75rem;
+
+            font-weight: 700;
+
+            letter-spacing: 0.18em;
+
+            color: var(--accent);
+
+            text-transform: uppercase;
+
+            margin-bottom: 18px;
+        }
+
+        .left-panel h1 {
+
+            font-family: 'Playfair Display', serif;
+
+            font-size: 3.6rem;
+
+            font-weight: 900;
+
+            line-height: 1.05;
+
+            margin-bottom: 20px;
+        }
+
+        .left-panel .divider {
+
+            width: 56px;
+
+            height: 2px;
+
+            background-color: var(--accent);
+
+            margin-bottom: 24px;
+        }
+
+        .left-panel p {
+
+            font-size: 0.97rem;
+
+            color: var(--text-muted);
+
+            line-height: 1.7;
+        }
+
+        .form-card {
+
+            background: var(--surface);
+
+            border-radius: 18px;
+
+            box-shadow: var(--shadow);
+
+            padding: 48px 44px;
+
+            width: 100%;
+
+            max-width: 480px;
+        }
+
+        .form-group {
+
+            margin-bottom: 22px;
+        }
+
+        label {
+
+            display: block;
+
+            font-size: 0.88rem;
+
+            font-weight: 700;
+
+            margin-bottom: 8px;
+        }
+
+        label .required {
+
+            color: var(--accent);
+        }
+
+        input[type="text"],
+        input[type="date"],
+        textarea {
+
+            width: 100%;
+
+            padding: 13px 16px;
+
+            font-size: 0.95rem;
+
+            border: 1.5px solid var(--border);
+
+            border-radius: 10px;
+
+            outline: none;
+        }
+
+        textarea {
+
+            resize: vertical;
+
+            min-height: 90px;
+        }
+
+        .date-row {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 16px;
+        }
+
+        .note-box {
+
+            background: #fdf6ed;
+
+            border: 1px solid #f0d9b8;
+
+            border-radius: 10px;
+
+            padding: 14px 16px;
+
+            font-size: 0.83rem;
+
+            color: var(--text-muted);
+
+            margin-bottom: 26px;
+
+            display: flex;
+
+            gap: 10px;
+        }
+
+        .btn-row {
+
+            display: flex;
+
+            gap: 14px;
+        }
+
+        .btn-reset {
+
+            flex: 1;
+
+            padding: 14px;
+
+            border-radius: 10px;
+
+            border: 1px solid var(--border);
+
+            background: transparent;
+
+            cursor: pointer;
+        }
+
+        .btn-submit {
+
+            flex: 2;
+
+            padding: 14px;
+
+            border-radius: 10px;
+
+            border: none;
+
+            background: var(--text-dark);
+
+            color: white;
+
+            cursor: pointer;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<nav>
+
+    <a href="#"
+       class="nav-logo">
+
+        Leave Portal
+
+    </a>
+
+    <ul class="nav-links">
+
+        <li>
+
+            <a th:href="@{/student/home}">
+                Home
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="active">
+                Apply
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="#">
+                Records
+            </a>
+
+        </li>
+
+        <li class="user-menu"
+            id="userMenu">
+
+            <button class="avatar-btn"
+
+                    id="avatarBtn"
+
+                    onclick="toggleDropdown(event)"
+
+                    th:text="${#strings.substring(user.fullName,0,2).toUpperCase()}">
+
+            </button>
+
+            <div class="dropdown"
+                 id="dropdown">
+
+                <div class="dropdown-header">
+
+                    <div class="d-name"
+                         th:text="${user.fullName}">
+                    </div>
+
+                    <div class="d-role">
+                        Student
+                    </div>
+
+                </div>
+
+                <a href="/logout"
+                   class="dropdown-item logout">
+
+                    Logout
+
+                </a>
+
+            </div>
+
+        </li>
+
+    </ul>
+
+</nav>
+
+<main>
+
+    <div class="left-panel">
+
+        <p class="eyebrow">
+            Leave Management
+        </p>
+
+        <h1>
+            Apply for Leave.
+        </h1>
+
+        <div class="divider"></div>
+
+        <p>
+
+            Submit your leave request quickly and easily.
+
+            Your application will be reviewed by the administrator.
+
+        </p>
+
+    </div>
+
+
+
+
+
+    <form class="form-card"
+
+          th:action="@{/student/apply-leave}"
+
+          th:object="${leaveRequest}"
+
+          method="post">
+
+        <div class="form-group">
+
+            <label for="leaveType">
+
+                Leave Type
+
+                <span class="required">*</span>
+
+            </label>
+
+            <input type="text"
+
+                   id="leaveType"
+
+                   placeholder="e.g. Sick Leave"
+
+                   th:field="*{leaveType}">
+
+            <p th:if="${#fields.hasErrors('leaveType')}"
+
+               th:errors="*{leaveType}"
+
+               style="color:red;
+                      font-size:0.8rem;
+                      margin-top:6px;">
+
+            </p>
+
+        </div>
+
+
+
+
+
+        <div class="date-row">
+
+            <div class="form-group">
+
+                <label for="fromDate">
+
+                    From Date
+
+                    <span class="required">*</span>
+
+                </label>
+
+                <input type="date"
+
+                       id="fromDate"
+
+                       th:field="*{fromDate}">
+
+                <p th:if="${#fields.hasErrors('fromDate')}"
+
+                   th:errors="*{fromDate}"
+
+                   style="color:red;
+                          font-size:0.8rem;
+                          margin-top:6px;">
+
+                </p>
+
+            </div>
+
+
+
+
+
+            <div class="form-group">
+
+                <label for="toDate">
+
+                    To Date
+
+                    <span class="required">*</span>
+
+                </label>
+
+                <input type="date"
+
+                       id="toDate"
+
+                       th:field="*{toDate}">
+
+                <p th:if="${#fields.hasErrors('toDate')}"
+
+                   th:errors="*{toDate}"
+
+                   style="color:red;
+                          font-size:0.8rem;
+                          margin-top:6px;">
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+
+
+        <div class="form-group">
+
+            <label for="reason">
+
+                Reason
+
+                <span class="required">*</span>
+
+            </label>
+
+            <textarea id="reason"
+
+                      placeholder="Enter reason..."
+
+                      th:field="*{reason}">
+
+            </textarea>
+
+            <p th:if="${#fields.hasErrors('reason')}"
+
+               th:errors="*{reason}"
+
+               style="color:red;
+                      font-size:0.8rem;
+                      margin-top:6px;">
+
+            </p>
+
+        </div>
+
+
+
+
+
+        <div class="note-box">
+
+            <span>
+                ℹ️
+            </span>
+
+            <span>
+
+                Your leave request will be reviewed by the administrator.
+
+            </span>
+
+        </div>
+
+
+
+
+
+        <div class="btn-row">
+
+            <button type="reset"
+                    class="btn-reset">
+
+                Reset
+
+            </button>
+
+            <button type="submit"
+                    class="btn-submit">
+
+                Submit Request →
+
+            </button>
+
+        </div>
+
+    </form>
+
+</main>
+
+<script>
+
+    function toggleDropdown(event) {
+
+        event.stopPropagation();
+
+        document.getElementById('dropdown')
+                .classList.toggle('open');
+    }
+
+    document.addEventListener('click',
+        function(e) {
+
+        const menu =
+            document.getElementById('userMenu');
+
+        if (!menu.contains(e.target)) {
+
+            document.getElementById('dropdown')
+                    .classList.remove('open');
+        }
+    });
+
+</script>
+
+</body>
+
+</html>

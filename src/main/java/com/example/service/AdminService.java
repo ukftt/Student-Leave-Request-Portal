@@ -13,66 +13,108 @@ import com.example.dto.*;
 @Service
 public class AdminService {
 
-    @Autowired
-    private LeaveRequestRepository leaveRequestRepository;
+        @Autowired
+        private LeaveRequestRepository leaveRequestRepository;
 
-    public AdminDashboardDTO getDashboardData() {
+        public AdminDashboardDTO getDashboardData() {
 
-        int totalRequests = (int) leaveRequestRepository.count();
+                int totalRequests = (int) leaveRequestRepository.count();
 
-        int pendingRequests = (int) leaveRequestRepository.countByStatus("PENDING");
+                int pendingRequests = (int) leaveRequestRepository.countByStatus("PENDING");
 
-        int approvedRequests = (int) leaveRequestRepository.countByStatus("APPROVED");
+                int approvedRequests = (int) leaveRequestRepository.countByStatus("APPROVED");
 
-        int rejectedRequests = totalRequests - pendingRequests - approvedRequests;
+                int rejectedRequests = totalRequests - pendingRequests - approvedRequests;
 
-        LocalDate threeDaysAgo = LocalDate.now().minusDays(3);
+                LocalDate threeDaysAgo = LocalDate.now().minusDays(3);
 
-        List<LeaveRequest> recentRequests =
+                List<LeaveRequest> recentRequests =
 
-                leaveRequestRepository
-                        .findByAppliedOnGreaterThanEqualOrderByAppliedOnDesc(
-                                threeDaysAgo);
+                                leaveRequestRepository
+                                                .findByAppliedOnGreaterThanEqualOrderByIdDesc(
+                                                                threeDaysAgo);
 
-        List<ActivityDTO> activities = new ArrayList<>();
+                List<ActivityDTO> activities = new ArrayList<>();
 
-        for (LeaveRequest request : recentRequests) {
+                for (LeaveRequest request : recentRequests) {
 
-            String message = "";
+                        String message = "";
 
-            if (request.getStatus().equals("PENDING")) {
+                        if (request.getStatus().equals("PENDING")) {
 
-                message = request.getUser().getFullName()
-                        + " applied for "
-                        + request.getLeaveType()
-                        + " Leave";
-            }
+                                message = request.getUser().getFullName()
+                                                + " applied for "
+                                                + request.getLeaveType()
+                                                + " Leave";
+                        }
 
-            else if (request.getStatus().equals("APPROVED")) {
+                        else if (request.getStatus().equals("APPROVED")) {
 
-                message = request.getUser().getFullName()
-                        + "'s leave approved";
-            }
+                                message = request.getUser().getFullName()
+                                                + "'s leave approved";
+                        }
 
-            else {
+                        else {
 
-                message = request.getUser().getFullName()
-                        + "'s leave rejected";
-            }
+                                message = request.getUser().getFullName()
+                                                + "'s leave rejected";
+                        }
 
-            ActivityDTO activity = new ActivityDTO(
+                        ActivityDTO activity = new ActivityDTO(
 
-                    request.getStatus(),
+                                        request.getStatus(),
 
-                    message,
+                                        message,
 
-                    "Recently");
+                                        "Recently");
 
-            activities.add(activity);
+                        activities.add(activity);
+                }
+
+                return new AdminDashboardDTO(totalRequests, pendingRequests, approvedRequests, rejectedRequests,
+                                recentRequests, activities);
+
         }
-        
-        return new AdminDashboardDTO(totalRequests, pendingRequests, approvedRequests, rejectedRequests,
-                recentRequests,activities);
 
-    }
+        public void approveLeave(Long id) {
+
+                LeaveRequest leaveRequest =
+
+                                leaveRequestRepository
+                                                .findById(id)
+                                                .orElse(null);
+
+                if (leaveRequest != null) {
+
+                        leaveRequest.setStatus(
+                                        "APPROVED");
+
+                        leaveRequest.setUpdatedOn(
+                                        LocalDate.now());
+
+                        leaveRequestRepository
+                                        .save(leaveRequest);
+                }
+        }
+
+        public void rejectLeave(Long id) {
+
+                LeaveRequest leaveRequest =
+
+                                leaveRequestRepository
+                                                .findById(id)
+                                                .orElse(null);
+
+                if (leaveRequest != null) {
+
+                        leaveRequest.setStatus(
+                                        "REJECTED");
+
+                        leaveRequest.setUpdatedOn(
+                                        LocalDate.now());
+
+                        leaveRequestRepository
+                                        .save(leaveRequest);
+                }
+        }
 }

@@ -43,6 +43,8 @@ public class LeaveController {
 
                 new LeaveRequestDTO());
 
+        model.addAttribute("user", user);
+        
         return "apply-leave";
     }
 

@@ -35,7 +35,7 @@ public class StudentService {
 
         List<LeaveRequest> recentRequests =
                 leaveRequestRepository
-                        .findTop5ByUserOrderByAppliedOnDesc(user);
+                        .findTop5ByUserOrderByIdDesc(user);
 
         return new StudentDashboardDTO(
                 user,
