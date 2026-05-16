@@ -117,4 +117,25 @@ public class AdminService {
                                         .save(leaveRequest);
                 }
         }
+
+        public int getRemainingLeaves(User user) {
+
+                List<LeaveRequest> approvedLeaves =
+
+                                leaveRequestRepository
+                                                .findByUserAndStatus(
+
+                                                                user,
+
+                                                                "APPROVED");
+
+                int usedLeaves = 0;
+
+                for (LeaveRequest leave : approvedLeaves) {
+
+                        usedLeaves += leave.getTotalDays();
+                }
+
+                return 12 - usedLeaves;
+        }
 }

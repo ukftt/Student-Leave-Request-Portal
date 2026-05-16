@@ -576,7 +576,6 @@
                             <th>Leaves</th>
                             <th>Status</th>
                             <th>Applied</th>
-                            <th>Action</th>
 
                         </tr>
 
@@ -630,17 +629,13 @@
 
                             <td>
 
-                                <div class="leaves-col">
+                                <span th:text="${remainingLeavesMap[req.user.id]}">
 
-                                    7 / 12
+                                    7
 
-                                </div>
+                                </span>
 
-                                <div class="leaves-remaining">
-
-                                    Remaining
-
-                                </div>
+                                / 12 Remaining
 
                             </td>
 

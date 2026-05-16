@@ -5,19 +5,17 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Home – Leave Portal</title>
 
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap"
-          rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
 
     <style>
-
         :root {
             --cream: #f0ebe3;
             --cream-2: #e8e0d5;
@@ -29,12 +27,14 @@
             --text-muted: #7a6a5a;
             --card-bg: #ffffff;
             --border: #ddd5c8;
-            --shadow: 0 4px 24px rgba(30,18,8,.07);
-            --shadow-lg: 0 8px 40px rgba(30,18,8,.12);
+            --shadow: 0 4px 24px rgba(30, 18, 8, .07);
+            --shadow-lg: 0 8px 40px rgba(30, 18, 8, .12);
             --radius: 14px;
         }
 
-        *, *::before, *::after {
+        *,
+        *::before,
+        *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
@@ -378,351 +378,339 @@
             background: #fdecea;
             color: #b94040;
         }
-
     </style>
 
 </head>
 
 <body>
 
-<header class="topbar">
+    <header class="topbar">
 
-    <a th:href="@{/student/home}"
-       class="topbar__logo">
-        Leave Portal
-    </a>
-
-    <nav class="topbar__nav">
-
-        <a th:href="@{/student/home}"
-           class="active">
-            Home
+        <a th:href="@{/student/home}" class="topbar__logo">
+            Leave Portal
         </a>
 
-        <a th:href="@{/student/apply-leave}">
-            Apply
-        </a>
+        <nav class="topbar__nav">
 
-        <a th:href="@{/student/records}">
-            Records
-        </a>
+            <a th:href="@{/student/home}" class="active">
+                Home
+            </a>
 
-        <div class="avatar-wrap">
+            <a th:href="@{/student/apply-leave}">
+                Apply
+            </a>
 
-            <div class="avatar"
-                 id="avatarBtn"
-                 th:text="${#strings.substring(dashboard.user.fullName,0,2).toUpperCase()}">
-                UK
-            </div>
+            <a th:href="@{/student/records}">
+                Records
+            </a>
 
-            <div class="dropdown"
-                 id="dropdown">
+            <div class="avatar-wrap">
 
-                <div class="dropdown__header">
+                <div class="avatar" id="avatarBtn"
+                    th:text="${#strings.substring(dashboard.user.fullName,0,2).toUpperCase()}">
+                    UK
+                </div>
 
-                    <div class="dropdown__name"
-                         th:text="${dashboard.user.fullName}">
-                        Udit Kumar
+                <div class="dropdown" id="dropdown">
+
+                    <div class="dropdown__header">
+
+                        <div class="dropdown__name" th:text="${dashboard.user.fullName}">
+                            Udit Kumar
+                        </div>
+
+                        <div class="dropdown__email" th:text="${dashboard.user.email}">
+                            test@gmail.com
+                        </div>
+
                     </div>
 
-                    <div class="dropdown__email"
-                         th:text="${dashboard.user.email}">
-                        test@gmail.com
-                    </div>
+                    <a th:href="@{/student/profile}" class="dropdown__item">
+                        Profile
+                    </a>
+
+                    <a th:href="@{/logout}" class="dropdown__item logout">
+                        Logout
+                    </a>
 
                 </div>
 
-                <a th:href="@{/student/profile}"
-                   class="dropdown__item">
-                    Profile
-                </a>
-
-                <a th:href="@{/logout}"
-                   class="dropdown__item logout">
-                    Logout
-                </a>
-
             </div>
 
-        </div>
+        </nav>
 
-    </nav>
+    </header>
 
-</header>
+    <main class="main">
 
-<main class="main">
-
-    <section class="hero">
-
-        <div>
-
-            <p class="hero__eyebrow">
-                Welcome back
-            </p>
-
-            <h1 class="hero__title">
-
-                <span th:text="${dashboard.user.fullName}">
-                    Student Name
-                </span>
-
-            </h1>
-
-            <p class="hero__sub">
-                Here's what's happening with your leaves.
-            </p>
-
-            <div class="divider"></div>
-
-        </div>
-
-        <div class="hero__date-card">
-
-            <p class="hero__date-label">
-                Today's Date
-            </p>
-
-            <p class="hero__date-value"
-               th:text="${#temporals.format(today,'dd MMM yyyy, EEEE')}">
-                21 May 2025
-            </p>
-
-        </div>
-
-    </section>
-
-    <section class="stats">
-
-        <div class="stat-card">
-
-            <div class="stat-icon total">
-                📅
-            </div>
+        <section class="hero">
 
             <div>
 
-                <p class="stat-label">
-                    Total Leaves
+                <p class="hero__eyebrow">
+                    Welcome back
                 </p>
 
-                <p class="stat-value"
-                   th:text="${dashboard.totalLeaves}">
-                    0
+                <h1 class="hero__title">
+
+                    <span th:text="${dashboard.user.fullName}">
+                        Student Name
+                    </span>
+
+                </h1>
+
+                <p class="hero__sub">
+                    Here's what's happening with your leaves.
+                </p>
+
+                <div class="divider"></div>
+
+            </div>
+
+            <div class="hero__date-card">
+
+                <p class="hero__date-label">
+                    Today's Date
+                </p>
+
+
+
+
+
+                <p class="hero__date-value" th:text="${#temporals.format(
+       T(java.time.LocalDate).now(),
+       'dd MMM yyyy, EEEE')}">
+
+                    21 May 2025
+
                 </p>
 
             </div>
 
-        </div>
+        </section>
 
-        <div class="stat-card">
+        <section class="stats">
 
-            <div class="stat-icon approved">
-                ✅
-            </div>
+            <div class="stat-card">
 
-            <div>
+                <div class="stat-icon total">
+                    📅
+                </div>
 
-                <p class="stat-label">
-                    Approved
-                </p>
+                <div>
 
-                <p class="stat-value"
-                   th:text="${dashboard.approvedLeaves}">
-                    0
-                </p>
+                    <p class="stat-label">
+                        Total Leaves
+                    </p>
 
-            </div>
+                    <p class="stat-value" th:text="${dashboard.totalLeaves}">
+                        0
+                    </p>
 
-        </div>
-
-        <div class="stat-card">
-
-            <div class="stat-icon pending">
-                🕐
-            </div>
-
-            <div>
-
-                <p class="stat-label">
-                    Pending
-                </p>
-
-                <p class="stat-value"
-                   th:text="${dashboard.pendingLeaves}">
-                    0
-                </p>
+                </div>
 
             </div>
 
-        </div>
+            <div class="stat-card">
 
-        <div class="stat-card">
+                <div class="stat-icon approved">
+                    ✅
+                </div>
 
-            <div class="stat-icon rejected">
-                ❌
-            </div>
+                <div>
 
-            <div>
+                    <p class="stat-label">
+                        Approved
+                    </p>
 
-                <p class="stat-label">
-                    Rejected
-                </p>
+                    <p class="stat-value" th:text="${dashboard.approvedLeaves}">
+                        0
+                    </p>
 
-                <p class="stat-value"
-                   th:text="${dashboard.rejectedLeaves}">
-                    0
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <section class="bottom-grid">
-
-        <div class="panel">
-
-            <h2 class="panel__title">
-                Quick Actions
-            </h2>
-
-            <div class="action-card">
-
-                <p class="action-card__title">
-                    Apply for Leave
-                </p>
-
-                <p class="action-card__desc">
-                    Submit a new leave request.
-                </p>
-
-                <a th:href="@{/student/apply-leave}"
-                   class="btn btn-primary">
-                    Apply Now
-                </a>
+                </div>
 
             </div>
 
-        </div>
+            <div class="stat-card">
 
-        <div class="panel">
+                <div class="stat-icon pending">
+                    🕐
+                </div>
 
-            <h2 class="panel__title">
-                Recent Leave Requests
-            </h2>
+                <div>
 
-            <div class="requests-empty"
-                 th:if="${#lists.isEmpty(dashboard.recentRequests)}">
+                    <p class="stat-label">
+                        Pending
+                    </p>
 
-                <p>
-                    No leave requests yet.
-                </p>
+                    <p class="stat-value" th:text="${dashboard.pendingLeaves}">
+                        0
+                    </p>
+
+                </div>
 
             </div>
 
-            <table class="requests-table"
-                   th:unless="${#lists.isEmpty(dashboard.recentRequests)}">
+            <div class="stat-card">
 
-                <thead>
+                <div class="stat-icon rejected">
+                    ❌
+                </div>
 
-                <tr>
+                <div>
 
-                    <th>Type</th>
+                    <p class="stat-label">
+                        Rejected
+                    </p>
 
-                    <th>From</th>
+                    <p class="stat-value" th:text="${dashboard.rejectedLeaves}">
+                        0
+                    </p>
 
-                    <th>To</th>
+                </div>
 
-                    <th>Status</th>
+            </div>
 
-                </tr>
+        </section>
 
-                </thead>
+        <section class="bottom-grid">
 
-                <tbody>
+            <div class="panel">
 
-                <tr th:each="leave : ${dashboard.recentRequests}">
+                <h2 class="panel__title">
+                    Quick Actions
+                </h2>
 
-                    <td th:text="${leave.leaveType}">
-                        Sick Leave
-                    </td>
+                <div class="action-card">
 
-                    <td th:text="${#temporals.format(leave.fromDate,'dd MMM')}">
-                        10 May
-                    </td>
+                    <p class="action-card__title">
+                        Apply for Leave
+                    </p>
 
-                    <td th:text="${#temporals.format(leave.toDate,'dd MMM')}">
-                        12 May
-                    </td>
+                    <p class="action-card__desc">
+                        Submit a new leave request.
+                    </p>
 
-                    <td>
+                    <a th:href="@{/student/apply-leave}" class="btn btn-primary">
+                        Apply Now
+                    </a>
 
-                        <span class="badge"
-                              th:classappend="${leave.status == 'APPROVED'} ? 'badge-approved'
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <h2 class="panel__title">
+                    Recent Leave Requests
+                </h2>
+
+                <div class="requests-empty" th:if="${#lists.isEmpty(dashboard.recentRequests)}">
+
+                    <p>
+                        No leave requests yet.
+                    </p>
+
+                </div>
+
+                <table class="requests-table" th:unless="${#lists.isEmpty(dashboard.recentRequests)}">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Type</th>
+
+                            <th>From</th>
+
+                            <th>To</th>
+
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr th:each="leave : ${dashboard.recentRequests}">
+
+                            <td th:text="${leave.leaveType}">
+                                Sick Leave
+                            </td>
+
+                            <td th:text="${#temporals.format(leave.fromDate,'dd MMM')}">
+                                10 May
+                            </td>
+
+                            <td th:text="${#temporals.format(leave.toDate,'dd MMM')}">
+                                12 May
+                            </td>
+
+                            <td>
+
+                                <span class="badge" th:classappend="${leave.status == 'APPROVED'} ? 'badge-approved'
                               : (${leave.status == 'PENDING'} ? 'badge-pending'
-                              : 'badge-rejected')"
+                              : 'badge-rejected')" th:text="${leave.status}">
 
-                              th:text="${leave.status}">
+                                    PENDING
 
-                            PENDING
+                                </span>
 
-                        </span>
+                            </td>
 
-                    </td>
+                        </tr>
 
-                </tr>
+                    </tbody>
 
-                </tbody>
+                </table>
 
-            </table>
+            </div>
 
-        </div>
+        </section>
 
-    </section>
+    </main>
 
-</main>
+    <script>
 
-<script>
+        const btn = document.getElementById('avatarBtn');
 
-    const btn = document.getElementById('avatarBtn');
+        const drop = document.getElementById('dropdown');
 
-    const drop = document.getElementById('dropdown');
+        btn.addEventListener('click', (e) => {
 
-    btn.addEventListener('click', (e) => {
+            e.stopPropagation();
 
-        e.stopPropagation();
+            drop.classList.toggle('open');
 
-        drop.classList.toggle('open');
+        });
 
-    });
+        document.addEventListener('click', () => {
 
-    document.addEventListener('click', () => {
+            drop.classList.remove('open');
 
-        drop.classList.remove('open');
+        });
 
-    });
+    </script>
 
-</script>
+    <script>
 
-<script>
+        window.addEventListener("pageshow", function (event) {
 
-    window.addEventListener("pageshow", function (event) {
+            const historyTraversal =
+                event.persisted ||
+                (typeof window.performance !== "undefined" &&
+                    window.performance.navigation.type === 2);
 
-        const historyTraversal =
-            event.persisted ||
-            (typeof window.performance !== "undefined" &&
-             window.performance.navigation.type === 2);
+            if (historyTraversal) {
 
-        if (historyTraversal) {
+                window.location.reload();
 
-            window.location.reload();
+            }
 
-        }
+        });
 
-    });
-
-</script>
+    </script>
 
 </body>
 

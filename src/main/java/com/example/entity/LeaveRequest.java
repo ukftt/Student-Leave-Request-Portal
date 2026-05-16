@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import jakarta.annotation.Generated;
 import jakarta.persistence.*;
@@ -37,4 +38,15 @@ public class LeaveRequest {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public long getTotalDays() {
+
+        return ChronoUnit.DAYS.between(
+
+            fromDate,
+
+            toDate
+
+        ) + 1;
+    }
 }

@@ -17,5 +17,11 @@ public class LeaveRequestService {
     public List<LeaveRequest> getUserRequests(User user){
         return leaveRequestRepository.findByUser(user);
     }
+    
+    public List<LeaveRequest>
+    getStudentLeaveHistory(User user) {
 
+        return leaveRequestRepository
+                .findByUserOrderByIdDesc(user);
+    }
 }

@@ -52,15 +52,8 @@ public class LeaveService {
         leaveRequest.setAppliedOn(
                 LocalDate.now());
 
-        leaveRequest.setUpdatedOn(
-                LocalDate.now());
-
-
-
 
         leaveRequest.setUser(user);
-
-
 
 
         leaveRequestRepository.save(
